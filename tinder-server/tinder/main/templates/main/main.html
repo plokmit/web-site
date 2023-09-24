@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Dating App</title>
+ <style>
+  body {
+   background-color: #f2ebeb; /* set a light background color */
+   font-family: Arial, sans-serif;
+  }
+
+  header {
+   background-color: #8b5eab; /* set the main color as lilac */
+   color: white;
+   padding: 20px;
+   text-align: center;
+   font-size: 30px;
+   font-weight: bold;
+   margin-bottom: 20px;
+  }
+
+  #main {
+        width: 80%;
+        margin: auto;
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+      }
+
+  nav {
+   background-color: #f2ebeb;
+   padding: 10px;
+   margin-bottom: 20px;
+   text-align: center;
+  }
+
+  nav ul {
+   list-style-type: none;
+   margin: 0;
+   padding: 0;
+  }
+
+  nav li {
+   display: inline-block;
+   margin-right: 20px;
+   padding: 10px;
+  }
+
+  nav a {
+   color: #8b5eab;
+   text-decoration: none;
+   font-weight: bold;
+  }
+
+  nav a:hover {
+   color: white;
+  }
+
+  section {
+   background-color: white;
+   padding: 20px;
+   margin-bottom: 20px;
+   border-radius: 10px;
+   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+   text-align: center;
+  }
+
+  footer {
+   background-color: #f2ebeb;
+   padding: 10px;
+   text-align: center;
+   font-size: 14px;
+   color: #8b5eab;
+  }
+ </style>
+</head>
+<body>
+ <header>Dating App</header>
+ <nav>
+  <ul>
+   <li><a href="{% url 'main_page' %}">Home</a></li>
+   <li><a href="#">Settings</a></li>
+   {% if user.is_authenticated %}
+     <li><a href="{% url 'users:profile' user.id %}">Profile</a></li>
+     <li><a href="#">Messages</a></li>
+     <li><a href="{% url 'users:logout' %}">Log out</a></li>
+   {% else %}
+     <li><a href="{% url 'users:login' %}">Log in</a></li>
+   {% endif %}
+  </ul>
+ </nav>
+ <div id="main">
+ <section>
+  <h1>Welcome to the Dating App</h1>
+  <p>Find new people to connect with. Start your search now!</p>
+  <a href="{% url 'main:search' %}">Search</a>
+ </section>
+ <footer>&copy; 2021 Dating App</footer>
+  </div>
+</body>
+</html>

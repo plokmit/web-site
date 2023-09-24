@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <title>Registration - Dating App</title>
+ <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+ <style>
+  body {
+   background-color: #f2ebeb;
+  }
+  nav {
+   background-color: #e6e6fa;
+   padding: 10px;
+   margin-bottom: 20px;
+   text-align: center;
+  }
+
+  #registration {
+        width: 80%;
+        margin: auto;
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+      }
+
+  nav ul {
+   list-style-type: none;
+   margin: 0;
+   padding: 0;
+  }
+
+  nav li {
+   display: inline-block;
+   margin-right: 20px;
+   padding: 10px;
+  }
+
+  nav a {
+   color: #6B3E6F;
+   text-decoration: none;
+   font-weight: bold;
+  }
+
+  nav a:hover {
+   color: white;
+  }
+  form {
+   background-color: #e6e6fa;
+   padding: 30px;
+   border-radius: 10px;
+   margin: auto;
+   width: 50%;
+  }
+  label {
+   display: block;
+   margin-bottom: 10px;
+   color: #6B3E6F;
+   font-weight: bold;
+  }
+  input[type="text"], input[type="email"], input[type="password"], select {
+   padding: 10px;
+   border-radius: 5px;
+   border: none;
+   margin-bottom: 20px;
+   width: 100%;
+   font-size: 16px;
+  }
+  input[type="submit"] {
+   background-color: #6a5acd;
+   color: #FFF;
+   padding: 10px 20px;
+   border-radius: 5px;
+   border: none;
+   cursor: pointer;
+   font-size: 16px;
+  }
+
+    #age-range-slider .ui-slider-range {
+      background-color: #e6e6fa; /* Сиреневый цвет для диапазона */
+    }
+    #age-range-slider .ui-slider-handle {
+      background-color: #9370db; /* Темно-сиреневый цвет для точек */
+    }
+    #age-values {
+      display: flex;
+      justify-content: space-between;
+    }
+    #distance-range-slider .ui-slider-range {
+      background-color: #E6E6FA; /* Светло-сиреневый цвет для диапазона */
+    }
+    #distance-range-slider .ui-slider-handle {
+      background-color: #9370DB; /* Темно-сиреневый цвет для точек */
+    }
+    #distance-values {
+      display: flex;
+      justify-content: space-between;
+    }
+  h1 {
+   color: #6a5acd;
+   text-align: center;
+   margin-top: 30px;
+  }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+  </style>
+ </style>
+</head>
+<body>
+ <nav>
+  <ul>
+   <li><a href="{% url 'main_page' %}">Home</a></li>
+   <li><a href="#">Settings</a></li>
+  </ul>
+ </nav>
+ <div id="registration">
+ <form method="post" action="{% url 'users:registration' %}" enctype="multipart/form-data">
+  {% csrf_token %}
+  <h1>Registration</h1>
+  <label for="{{form.first_name.id_for_label}}">Имя:</label>
+  {{form.first_name}}
+  <label for="{{form.last_name.id_for_label}}">Фамилия:</label>
+  {{form.last_name}}
+  <label for="{{form.username.id_for_label}}">Имя пользователя:</label>
+  {{form.username}}
+  <label for="{{form.email.id_for_label}}">Электронная почта:</label>
+  {{form.email}}
+  <label for="{{form.password1.id_for_label}}">Пароль:</label>
+  {{form.password1}}
+  <label for="{{form.password2.id_for_label}}">Пароль повторно:</label>
+  {{form.password2}}
+  <label for="{{form.age.id_for_label}}">Возраст:</label>
+  {{form.age}}
+  <label for="{{form.interests.id_for_label}}">Интересы:</label>
+  {{form.interests}}
+  <label for="{{form.description.id_for_label}}">Описание:</label>
+  {{form.description}}
+  <label for="{{form.image.id_for_label}}">Фотографии:</label>
+  {{form.image}}
+<!--  <label for="gender">Gender:</label>
+  <select name="gender" id="gender">
+   <option value="male">Male</option>
+   <option value="female">Female</option>
+  </select>
+   <br>-->
+    <label for="age-range">Диапазон возраст партнера:</label>
+    <div id="age-range-slider"></div>
+   <br>
+    <div id="age-values">
+      {{ form.prefer_age_min }}
+     {{ form.prefer_age_max }}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+      $(function() {
+        $("#age-range-slider").slider({
+          range: true,
+          min: 18,
+          max: 99,
+          values: [18, 99],
+          slide: function(event, ui) {
+            $("#age-min").val(ui.values[0]);
+            $("#age-max").val(ui.values[1]);
+          }
+        });
+        $("#age-min").val($("#age-range-slider").slider("values", 0));
+        $("#age-max").val($("#age-range-slider").slider("values", 1));
+      });
+    </script>
+   <br>
+    <label for="{form.prefer_location.id_for_label}}">Предпочитаемая локация:</label>
+  {{form.prefer_location}}
+
+    <label for="distance-range">Диапазон расстояний:</label>
+    <div id="distance-range-slider"></div>
+    <br>
+   <div id="distance-values">
+    {{form.prefer_distance_min}}
+    {{form.prefer_distance_max}}
+   </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+      $(function() {
+        $("#distance-range-slider").slider({
+          range: true,
+          min: 1,
+          max: 100,
+          values: [1, 100],
+          slide: function(event, ui) {
+            $("#distance-min").val(ui.values[0]);
+            $("#distance-max").val(ui.values[1]);
+          }
+        });
+        $("#distance-min").val($("#distance-range-slider").slider("values", 0));
+        $("#distance-max").val($("#distance-range-slider").slider("values", 1));
+      });
+    </script>
+   <br>
+<!--    <label for="interests">Предпочитаемые интересы:</label>
+    <input type="text" id="interests" name="interests" placeholder="Интересы" required>-->
+  <input type="submit" value="Зарегистрироваться">
+ </form>
+  </div>
+</body>
+</html>
